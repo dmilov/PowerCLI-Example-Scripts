@@ -83,6 +83,9 @@ function Connect-SsoAdminServer {
 
    .PARAMETER SkipCertificateCheck
    Specifies whether server Tls certificate validation will be skipped
+   
+   .PARAMETER BackwardCompatible
+   Specifies whether to request 2.0 version of LookupService
 
    .EXAMPLE
    Connect-SsoAdminServer -Server my.vc.server -User myAdmin@vsphere.local -Password MyStrongPa$$w0rd
@@ -120,7 +123,13 @@ function Connect-SsoAdminServer {
       Mandatory=$false,
       HelpMessage='Skips server Tls certificate validation')]
    [switch]
-   $SkipCertificateCheck)
+   $SkipCertificateCheck,
+
+   [Parameter(
+      Mandatory=$false,
+      HelpMessage='Requests 2.0 version of LookupService')]
+   [switch]
+   $BackwardCompatible)
 
    Process {
       $certificateValidator = $null
@@ -134,7 +143,8 @@ function Connect-SsoAdminServer {
          $Server,
          $User,
          $Password,
-         $certificateValidator)
+         $certificateValidator,
+         $BackwardCompatible.IsPresent)
 
       if ($ssoAdminServer -ne $null) {
          # Update $global:DefaultSsoAdminServers varaible

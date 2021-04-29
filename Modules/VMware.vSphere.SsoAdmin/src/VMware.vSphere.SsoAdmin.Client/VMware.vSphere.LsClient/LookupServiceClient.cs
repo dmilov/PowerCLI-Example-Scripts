@@ -26,10 +26,11 @@ namespace VMware.vSphere.LsClient
          Value = "ServiceInstance"
       };
 
-      public LookupServiceClient(string hostname, X509CertificateValidator serverCertificateValidator) {
+      public LookupServiceClient(string hostname, X509CertificateValidator serverCertificateValidator, bool backwardCompatible = false) {
          var lsUri = $"https://{hostname}/lookupservice/sdk";
 
          _lsClient = new LsPortTypeClient(GetBinding(), new EndpointAddress(new Uri(lsUri)));
+         _lsClient.Endpoint.EndpointBehaviors.Add(new Ls2EndpointBehavior(backwardCompatible));
 
          var serverAuthentication = GetServerAuthentication(serverCertificateValidator);
 

@@ -20,7 +20,8 @@ namespace VMware.vSphere.SsoAdminClient.DataTypes
       public SsoAdminServer(string hostname, 
          string user, 
          SecureString password, 
-         X509CertificateValidator serverCertificateValidator) {
+         X509CertificateValidator serverCertificateValidator,
+         bool backwardCompatible) {
 
          Name = hostname;
 
@@ -28,7 +29,8 @@ namespace VMware.vSphere.SsoAdminClient.DataTypes
             hostname,
             user,
             password,
-            serverCertificateValidator);
+            serverCertificateValidator,
+            backwardCompatible);
 
          Id = $"/SsoAdminServer={NormalizeUserName()}@{Name}";
       }

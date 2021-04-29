@@ -27,12 +27,12 @@ namespace VMware.vSphere.SsoAdminClient
       private SsoPortTypeClient _ssoAdminBindingClient;
       private UserPassSecurityContext _securityContext;
 
-      public SsoAdminClient(string hostname, string user, SecureString password, X509CertificateValidator serverCertificateValidator) {
+      public SsoAdminClient(string hostname, string user, SecureString password, X509CertificateValidator serverCertificateValidator, bool backwardCompatible = false) {
          if (hostname == null) throw new ArgumentNullException(nameof(hostname));
          if (user == null) throw new ArgumentNullException(nameof(user));
          if (password == null) throw new ArgumentNullException(nameof(password));
 
-         var lsClient = new LookupServiceClient(hostname, serverCertificateValidator);
+         var lsClient = new LookupServiceClient(hostname, serverCertificateValidator, backwardCompatible);
 
          // Create STS Client
          var stsUri = lsClient.GetStsEndpointUri();
